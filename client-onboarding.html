@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QQSGP0M6Z3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QQSGP0M6Z3');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Onboarding | Lead Sniper</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#030303',
+                        surface: '#111111',
+                        primary: '#4ADE80',
+                        blurple: '#5865F2',
+                    },
+                    fontFamily: {
+                        sans: ['Satoshi', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #030303; color: white; overflow-x: hidden; }
+        
+        /* Form Input Styles */
+        .form-input {
+            width: 100%;
+            background: #1A1A1A;
+            border: 1px solid #333;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: #4ADE80; /* Using Primary Green for Client Focus */
+            box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+            background: #202020;
+        }
+        
+        /* Custom Select Arrow */
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            pointer-events: none;
+        }
+
+        /* Glassmorphic Container */
+        .glass-form {
+            background: rgba(17, 17, 17, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+    </style>
+</head>
+<body class="selection:bg-primary selection:text-black flex flex-col min-h-screen">
+
+    <canvas id="canvas-bg"></canvas>
+
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/30 border-b border-white/5">
+        <div class="font-bold text-xl tracking-tighter flex items-center gap-2">
+            <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm mr-4">
+                <i class="fas fa-arrow-left"></i> Home
+            </a>
+            <span class="flex items-center gap-2">
+                Lead<span class="text-primary">Sniper</span> <span class="text-xs bg-surface border border-white/10 px-2 py-0.5 rounded text-gray-400 ml-2">DETAILS</span>
+            </span>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center pt-32 pb-20 px-4">
+        <div class="w-full max-w-2xl">
+            
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-black tracking-tighter mb-4">
+                    Setup Your <span class="text-primary">Profile</span>
+                </h1>
+                <p class="text-gray-400 text-sm max-w-md mx-auto">
+                    Please provide the details below to initialize your server integration.
+                </p>
+            </div>
+
+            <div class="glass-form rounded-2xl p-8 md:p-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+                <form action="https://api.web3forms.com/submit" method="POST" class="relative z-10 space-y-5">
+                    
+                    <input type="hidden" name="access_key" value="2a2f05d0-4a2d-416c-af5a-8799e12172be">
+                    <input type="hidden" name="subject" value="New Client Onboarding Submission">
+                    <input type="hidden" name="botcheck" class="hidden" style="display: none;">
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Full Name</label>
+                        <input type="text" name="full_name" required placeholder="John Doe" class="form-input">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Discord Server Name</label>
+                        <input type="text" name="server_name" required placeholder="e.g. Creative Hub" class="form-input">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Email Address</label>
+                            <input type="email" name="email" required placeholder="john@example.com" class="form-input">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Phone Number</label>
+                            <input type="tel" name="phone" required placeholder="+1 (555) 000-0000" class="form-input">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Billing Address</label>
+                        <textarea name="address" rows="2" placeholder="Street, City, Zip Code, Country" class="form-input resize-none"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Current / Expected Plan</label>
+                        <div class="select-wrapper">
+                            <select name="plan_tier" class="form-input appearance-none cursor-pointer text-gray-300">
+                                <option value="" disabled selected>Select a Plan...</option>
+                                <option value="basic">Basic Plan</option>
+                                <option value="standard">Standard Plan</option>
+                                <option value="agency">Agency Plan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-primary text-black font-bold rounded-lg hover:bg-green-400 transition-all shadow-lg shadow-green-500/20 mt-6 flex items-center justify-center gap-2 group">
+                        Confirm Details <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    
+                    <p class="text-center text-xs text-gray-600 mt-4">
+                        Your data is processed securely.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center text-gray-600 text-xs border-t border-white/5">
+        &copy; 2025 Lead Sniper. All rights reserved.
+    </footer>
+
+    <script>
+        // Particle Background (Green Theme)
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Create particles
+        for(let i=0; i<30; i++) particles.push({
+            x: Math.random()*width, 
+            y: Math.random()*height, 
+            vx: (Math.random()-0.5)*0.5, 
+            vy: (Math.random()-0.5)*0.5, 
+            size: Math.random()*2
+        });
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(74, 222, 128, 0.2)'; // Green particles
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > width) p.vx *= -1;
+                if(p.y < 0 || p.y > height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>

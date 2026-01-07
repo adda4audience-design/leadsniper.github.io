@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QQSGP0M6Z3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QQSGP0M6Z3');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadSniper B2B | Enterprise Solutions</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#030303',
+                        surface: '#111111', /* Lighter than background for card visibility */
+                        primary: '#4ADE80',
+                        blurple: '#5865F2',
+                    },
+                    fontFamily: {
+                        sans: ['Satoshi', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        scanline: {
+                            '0%': { backgroundPosition: '0% 0%' },
+                            '100%': { backgroundPosition: '0% 100%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #030303; color: white; overflow-x: hidden; }
+        
+        /* --- HOLOGRAM CSS --- */
+        .stage-3d { 
+            perspective: 1200px; 
+            transform-style: preserve-3d; 
+            width: 100%;
+        }
+        
+        /* The Hologram Container - Mobile Optimized */
+        .hologram-card {
+            background: rgba(88, 101, 242, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(88, 101, 242, 0.5);
+            box-shadow: 0 0 30px rgba(88, 101, 242, 0.2), inset 0 0 20px rgba(88, 101, 242, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            transform: rotateX(10deg) rotateY(-5deg);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 600px;
+            /* Adaptive Height */
+            min-height: 180px;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 640px) {
+            .hologram-card {
+                transform: rotateX(5deg) rotateY(0deg); /* Flatter on mobile for readability */
+                padding: 15px;
+            }
+        }
+
+        .hologram-scanlines {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px;
+            opacity: 0.15;
+            z-index: 2;
+        }
+        
+        .corner-accent {
+            position: absolute; width: 20px; height: 20px;
+            border: 2px solid #5865F2;
+            z-index: 3;
+        }
+        .tl { top: 0; left: 0; border-right: none; border-bottom: none; border-radius: 12px 0 0 0; }
+        .tr { top: 0; right: 0; border-left: none; border-bottom: none; border-radius: 0 12px 0 0; }
+        .bl { bottom: 0; left: 0; border-right: none; border-top: none; border-radius: 0 0 0 12px; }
+        .br { bottom: 0; right: 0; border-left: none; border-top: none; border-radius: 0 0 12px 0; }
+
+        .d-embed {
+            background: rgba(47, 49, 54, 0.6);
+            border-left: 3px solid #5865F2;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        .d-btn { 
+            background: rgba(79, 84, 92, 0.8); 
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.7rem; padding: 6px 12px; 
+            border-radius: 4px; color: white; font-weight: 600; 
+            display: inline-block; margin-top: 8px; margin-right: 8px;
+        }
+
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; }
+        .text-glow { text-shadow: 0 0 30px rgba(88, 101, 242, 0.6); }
+    </style>
+</head>
+<body class="selection:bg-blurple selection:text-white flex flex-col min-h-screen">
+
+    <canvas id="canvas-bg"></canvas>
+
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-sm bg-black/30 border-b border-white/5">
+        <div class="font-bold text-xl tracking-tighter flex items-center gap-2">
+            Lead<span class="text-primary">Sniper</span> <span class="text-xs bg-blurple px-2 py-0.5 rounded text-white ml-2">B2B</span>
+        </div>
+        <div class="hidden md:flex gap-6 text-sm font-medium text-gray-400">
+            <a href="#benefits" class="hover:text-blurple transition">Benefits</a>
+            <a href="#pricing" class="hover:text-blurple transition">Agency Plans</a>
+        </div>
+        <a href="partner.html" 
+           class="text-sm font-bold bg-white text-black px-4 py-2 rounded-full hover:bg-blurple hover:text-white transition-colors flex items-center gap-2">
+           Contact Sales
+        </a>
+    </nav>
+
+    <main class="flex-grow flex flex-col justify-center pt-32 pb-10 px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl w-full mx-auto">
+            
+            <div class="z-10 order-1 lg:order-1"> 
+                <div class="inline-block px-3 py-1 mb-6 text-xs font-bold tracking-widest text-blurple border border-blurple/20 rounded-full bg-blurple/10">
+                    AGENCY AUTOMATION
+                </div>
+                <h1 class="text-5xl md:text-6xl font-black tracking-tighter leading-[0.9] mb-6">
+                    YOUR PIPELINE. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blurple to-cyan-400 text-glow">ON AUTOPILOT.</span>
+                </h1>
+                <p class="text-gray-400 text-lg max-w-md leading-relaxed mb-8">
+                    Stop manually searching. We deliver pre-vetted, high-ticket leads directly to your team's Discord server. 
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#pricing" 
+                       class="px-8 py-3 bg-blurple text-white font-bold rounded-full hover:scale-105 transition-transform text-center shadow-[0_0_20px_rgba(88,101,242,0.4)] flex items-center justify-center gap-2">
+                        View Pricing <i class="fas fa-arrow-down text-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="stage-3d flex items-center justify-center order-2 lg:order-2">
+                <div class="hologram-card animate-float-slow">
+                    <div class="hologram-scanlines"></div>
+                    <div class="corner-accent tl"></div><div class="corner-accent tr"></div>
+                    <div class="corner-accent bl"></div><div class="corner-accent br"></div>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-full bg-blurple flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-white">LS</div>
+                        <div class="flex-1">
+                            <div class="flex items-center text-xs font-bold text-white mb-1">
+                                Lead Sniper <span class="bg-blurple px-1 rounded text-[9px] ml-2">BOT</span>
+                                <span class="text-gray-500 font-normal text-[10px] ml-auto">Now</span>
+                            </div>
+                            
+                            <div class="text-xs text-gray-300">
+                                🚨 <span class="text-blurple">@Sales Team</span> New lead matching criteria:
+                            </div>
+
+                            <div class="d-embed">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-[10px] text-gray-400 font-bold tracking-widest uppercase">VIDEO EDITING</span>
+                                    <span class="text-primary text-[10px] font-mono bg-primary/10 px-2 rounded border border-primary/20">$2,000+</span>
+                                </div>
+                                <div class="text-[#00b0f4] font-bold text-sm mb-1 truncate">Need Editor for Netflix-style Doc</div>
+                                <div class="text-[10px] text-gray-400 leading-tight">
+                                    Looking for an agency to handle 4 videos/mo. Budget is flexible...
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2 mt-1">
+                                <div class="d-btn">View Post</div>
+                                <div class="d-btn border-blurple text-blurple">Auto-Draft ⚡</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="benefits" class="py-16 border-t border-white/5 bg-gradient-to-b from-surface to-black relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blurple to-transparent opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl font-bold mb-2">Why Upgrade to Agency?</h2>
+                <p class="text-gray-500 text-sm">Features designed for scale, missing from basic plans.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-surface p-6 rounded-xl border border-white/10 hover:border-blurple/40 transition-colors">
+                    <div class="w-10 h-10 bg-blurple/10 rounded-lg flex items-center justify-center mb-4 text-blurple">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Min-Budget Filter</h3>
+                    <p class="text-xs text-gray-400">Basic plans see everything. Agency plans only see leads above $500, $1k, or $5k. Filter out the noise.</p>
+                </div>
+
+                <div class="bg-surface p-6 rounded-xl border border-white/10 hover:border-blurple/40 transition-colors">
+                    <div class="w-10 h-10 bg-blurple/10 rounded-lg flex items-center justify-center mb-4 text-blurple">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">One-Click Drafts</h3>
+                    <p class="text-xs text-gray-400">Don't write proposals from scratch. Click a button and get a pre-written, AI-tailored DM ready to send.</p>
+                </div>
+
+                <div class="bg-surface p-6 rounded-xl border border-white/10 hover:border-blurple/40 transition-colors">
+                    <div class="w-10 h-10 bg-blurple/10 rounded-lg flex items-center justify-center mb-4 text-blurple">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">ROI Reports</h3>
+                    <p class="text-xs text-gray-400">Prove the value. We send monthly PDF reports showing exactly how many leads your team acted on.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-20 px-6 border-t border-white/5 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Select Your Tier</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+                
+                <div class="bg-surface border border-white/20 rounded-3xl p-8 hover:border-white/40 transition-all opacity-100 shadow-lg">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Niche</h3>
+                    <div class="text-3xl font-black text-white mb-6">$25<span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                    
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-3 text-gray-300"><i class="fas fa-check text-gray-600 text-xs"></i> 1 Skill Category</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i class="fas fa-check text-gray-600 text-xs"></i> Instant Delivery</li>
+                        <li class="flex items-center gap-3 text-gray-600 line-through decoration-gray-800"><i class="fas fa-times text-gray-800 text-xs"></i> Min-Budget Filter</li>
+                        <li class="flex items-center gap-3 text-gray-600 line-through decoration-gray-800"><i class="fas fa-times text-gray-800 text-xs"></i> Auto-Drafts</li>
+                    </ul>
+
+                    <a href="partner.html" class="block w-full py-3 bg-[#222] border border-white/10 text-white font-bold rounded-xl hover:bg-white hover:text-black transition text-center text-sm">
+                       Contact Sales
+                    </a>
+                </div>
+
+                <div class="bg-surface border border-white/20 rounded-3xl p-8 hover:border-white/40 transition-all opacity-100 shadow-lg">
+                    <h3 class="text-lg font-bold text-gray-300 mb-1">Hub</h3>
+                    <div class="text-3xl font-black text-white mb-6">$50<span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                    
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-3 text-gray-300"><i class="fas fa-check text-gray-600 text-xs"></i> All Skill Categories</li>
+                        <li class="flex items-center gap-3 text-gray-300"><i class="fas fa-check text-gray-600 text-xs"></i> Role Pings</li>
+                        <li class="flex items-center gap-3 text-gray-600 line-through decoration-gray-800"><i class="fas fa-times text-gray-800 text-xs"></i> Min-Budget Filter</li>
+                        <li class="flex items-center gap-3 text-gray-600 line-through decoration-gray-800"><i class="fas fa-times text-gray-800 text-xs"></i> Auto-Drafts</li>
+                    </ul>
+
+                    <a href="partner.html" class="block w-full py-3 bg-[#222] border border-white/10 text-white font-bold rounded-xl hover:bg-white hover:text-black transition text-center text-sm">
+                       Contact Sales
+                    </a>
+                </div>
+
+                <div class="bg-[#151515] border-2 border-blurple rounded-3xl p-10 transform md:scale-105 shadow-[0_0_50px_rgba(88,101,242,0.2)] z-10 relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blurple text-white text-[10px] font-bold px-4 py-1 rounded-full tracking-widest uppercase shadow-lg">
+                        Recommended
+                    </div>
+                    <h3 class="text-2xl font-bold text-blurple mb-1">Agency</h3>
+                    <p class="text-xs text-gray-500 mb-6">Full Power Automation</p>
+                    <div class="text-5xl font-black text-white mb-8">$100<span class="text-sm text-gray-500 font-normal">/mo</span></div>
+                    
+                    <ul class="space-y-4 mb-10 text-sm">
+                        <li class="flex items-center gap-3 text-white"><i class="fas fa-check text-blurple text-xs"></i> <strong>Min-Budget Filtering</strong></li>
+                        <li class="flex items-center gap-3 text-white"><i class="fas fa-check text-blurple text-xs"></i> <strong>Multi-Channel Routing</strong></li>
+                        <li class="flex items-center gap-3 text-white"><i class="fas fa-check text-blurple text-xs"></i> <strong>Auto-Draft Buttons</strong></li>
+                        <li class="flex items-center gap-3 text-white"><i class="fas fa-check text-blurple text-xs"></i> Monthly ROI Reports</li>
+                    </ul>
+
+                    <a href="partner.html" class="block w-full py-4 bg-blurple text-white font-bold rounded-xl hover:bg-indigo-500 transition text-center text-sm shadow-lg shadow-indigo-500/20">
+                       Contact Sales
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 px-6 border-t border-white/10 bg-black text-sm text-center text-gray-600">
+        &copy; 2025 Lead Sniper B2B. <a href="partner.html" class="text-gray-400 hover:text-white">Back to App</a>
+    </footer>
+
+    <script>
+        // Simple Particle Background
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+
+        for(let i=0; i<30; i++) particles.push({x: Math.random()*width, y: Math.random()*height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, size: Math.random()*2});
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(88, 101, 242, 0.2)';
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > width) p.vx *= -1;
+                if(p.y < 0 || p.y > height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
